@@ -3,7 +3,9 @@
 {% block title %} - QnA_list {% endblock %}
 
 {% block content %}
-
+    
+    <li class="nav-item"><a href="{% url 'QnA:QnA_upload' %}" class="nav-link">Personal QnA Upload</a></li>
+    
     {% for post in MyQnAs %}
         <div class="row">
             <div class="col-md-2"></div>

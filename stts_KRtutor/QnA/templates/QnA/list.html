@@ -4,20 +4,23 @@
 
 {% block content %}
 
-{% for post in QnAs %}
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 panel panel-default">
-            <button type="button" class="btn btn-xs btn-info">
-                {{post.author.username}}</button>
-            <p>{{post.text|linebreaksbr}}</p>
-            <p class="text-right">
-                <a href="{% url 'QnA:QnA_detail' pk=post.id %}" class="btn btn-xs btn-success">comments</a>
-            </p>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
+    <li class="nav-item"><a href="{% url 'QnA:QnA_upload' %}" class="nav-link">Personal QnA Upload</a></li>
+    <li class="nav-item"><a href="{% url 'QnA:MyQnA' %}" class="nav-link">My Questions</a></li>
 
-{% endfor %}
+    {% for post in QnAs %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 panel panel-default">
+                <button type="button" class="btn btn-xs btn-info">
+                    {{post.author.username}}</button>
+                <p>{{post.text|linebreaksbr}}</p>
+                <p class="text-right">
+                    <a href="{% url 'QnA:QnA_detail' pk=post.id %}" class="btn btn-xs btn-success">comments</a>
+                </p>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+    {% endfor %}
 
 {% endblock %}
