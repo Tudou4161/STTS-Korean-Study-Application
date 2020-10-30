@@ -9,6 +9,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <title> korean STTS {% block title %}{% endblock %}</title>
+    <style>
+        form{
+            display : none;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,12 +29,18 @@
                 <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
                 <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Signup</a></li>
                 {% endif %}{% endcomment %}
-
-                <li class="nav-item"><a href="{% url 'QnA:QnA_list' %}">QnA List</a></li>
-                <li class="nav-"   
+                
+                <form method="POST">
+                    <button name="username" value="{{user.get_username}}">버튼</button>
+                </form>
+                <li class="nav-item"><a href="#" class="nav-link">Welcome, {{user.get_username}}</a></li>
+                <li class="nav-item"><a href="{% url 'QnA:QnA_list' %}" class="nav-link">QnA Community</a></li>
+                <li class="nav-item"><a href="{% url 'QnA:QnA_upload' %}" class="nav-link">Personal QnA Upload</a></li>
+                {% comment %}<li class="nav-item"><a href="{% url 'QnA:MyQnA' %}" class="nav-link">My QnA</a></li>{% endcomment %}
             </ul>
         </nav>
     </header>
+
 
     {% block content %}
 
