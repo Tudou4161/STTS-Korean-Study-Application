@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'QnA',
     'main_app',
     'account',
-    'disqus',
-    'django.contrib.sites',
+    # 'disqus',
+    # 'django.contrib.sites',
 ]
 
 
@@ -131,4 +131,6 @@ STATICFILES_DIRS = (
 
 #QnA 앱 댓글기능 구현
 DISQUS_WEBSITE_SHORTNAME = "KoreanSTTS"
-SITE_ID = 1
+# SITE_ID = 
+
+LOGIN_REDIRECT_URL = '/'
