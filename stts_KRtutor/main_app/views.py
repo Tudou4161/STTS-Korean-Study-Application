@@ -1,3 +1,273 @@
-from django.shortcuts import render
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import auth
+# 페이지 네이터 모듈 추가
+from django.core.paginator import Paginator
+from .models import CheckProcess
+from .models import EssentialSentenceDB, ConversationPracticeQuestionDB, ConversationPracticeAnswerDB
+from .models import ChapterNumberDB
+import json
+import os
+import sys
+import urllib.request
+import copy
 
 # Create your views here.
+def main(request):
+    return render(request, "main_app/main.html")
+
+def chapter(request):
+    chap_no = ChapterNumberDB.objects.all()
+
+    global en
+
+    if request.method == "POST":
+        en = request.POST["trans_lang_option"]
+
+    kr_trans_list = []
+    for idx in range(0, len(chap_no)):
+
+        no = chap_no.values()[idx]["ChapNo"]
+        chapName_kr = chap_no.values()[idx]["ChapName"]
+        trans_stc = translate(chap_no.values()[idx]["ChapName"], en)
+
+        kr_trans_list.append([no, chapName_kr, trans_stc])
+
+    context = {
+        'chap_number': chap_no,
+        'kr_trans_list': kr_trans_list
+    }
+
+    return render(request, "main_app/chapter.html", context)
+
+
+def chap_detail(request, cn_ChapNo):
+    # chapter_Number를 전역변수에 담아준다.
+    global chap_number
+    chap_number = cn_ChapNo
+    chap_detail = ChapterNumberDB.objects.get(ChapNo=cn_ChapNo)
+
+    global check_list
+    sentence_list = EssentialSentenceDB.objects.filter(ChapNo=chap_number, InnerNo=1)
+    check_list = [False] * len(sentence_list)
+
+    global check_list2
+    sentence_list2 = ConversationPracticeQuestionDB.objects.filter(ChapNo=chap_number, InnerNo=2)
+    check_list2 = [False] * len(sentence_list2)
+
+    context = {
+        'chap_detail': chap_detail,
+    }
+    
+    if request.method == "POST":
+        if "go_before" in request.POST:
+            return redirect("main_app/chapter")
+
+    return render(request, 'main_app/chap_detail.html', context)
+
+
+def chap_sentence_ES(request, cn_ChapNo):
+    sentence_list = EssentialSentenceDB.objects.filter(ChapNo=chap_number, InnerNo=1)
+
+    trans_list = []
+    for idx in range(len(sentence_list)):
+        page = request.GET.get('page')
+        if page == None:
+            page = 1
+            if idx == page - 1:
+                trans_stc = translate(sentence_list.values()[idx]["Essentence_question"], en)
+                trans_list.append(trans_stc)
+
+        else:
+            page = int(page)
+            if idx == page - 1:
+                trans_stc = translate(sentence_list.values()[idx]["Essentence_question"], en)
+                trans_list.append(trans_stc)
+
+    # sentence_list = EssentialSentenceDB.objects.all()
+    paginator = Paginator(sentence_list, 1)
+    paginator_trans = Paginator(trans_list, 1)
+
+    page = request.GET.get('page')
+
+    sentences = paginator.get_page(page)
+    sentences_trans = paginator_trans.get_page(page)
+
+    if request.method == "POST":
+        if "sendtext" in request.POST:
+            sendtext = request.POST["sendtext"]
+            origintext = request.POST["origintext"]
+            print(origintext)
+            print(sendtext)
+
+            sent = (sendtext, origintext)
+
+            tfidf_vec = TfidfVectorizer()
+            tfidf_mat = tfidf_vec.fit_transform(sent)
+            threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
+
+            if threshold > 0.3:
+                print("맞았습니다.")
+                print(threshold)
+                check_index = EssentialSentenceDB.objects.filter(Essentence_question=origintext)
+                check_index = check_index.values()[0]["SentenceNo"]
+                check_list[check_index - 1] = True
+                print(check_list)
+
+                if all(check_list) == True:
+                    print("수료하셨습니다.")
+                else:
+                    print("수료하지 못했습니다.")
+
+            else:
+                print(threshold)
+                print("틀렸습니다. 다시 시도해주세요!")
+                print("수료하지 못했습니다.")
+
+        else:
+            sendtext = False
+
+    context = {
+        "sentences": sentences,
+        "sentences_trans": sentences_trans,
+        "check_list": check_list,
+        "is_complete": all(check_list),
+        "chap_number": chap_number,
+        "InnerNo": 1
+    }
+
+    if request.method == "POST":
+        if "go_before2" in request.POST:
+            return redirect("chapter")
+
+    return render(request, "main_app/chap_sentence.html", context)
+
+
+def chap_sentence_Con(request):
+    question_list = ConversationPracticeQuestionDB.objects.filter(ChapNo=chap_number, InnerNo=2)
+    answer_list = ConversationPracticeAnswerDB.objects.filter(ChapNo=chap_number, InnerNo=2)
+
+    question_trans_list = []
+    for idx in range(len(question_list)):
+        page = request.GET.get('page')
+        if page == None:
+            page = 1
+            if idx == page - 1:
+                question_trans_stc = translate(question_list.values()[idx]["Cosentence_question"], en)
+                question_trans_list.append(question_trans_stc)
+        else:
+            page = int(page)
+            if idx == page - 1:
+                question_trans_stc = translate(question_list.values()[idx]["Cosentence_question"], en)
+                question_trans_list.append(question_trans_stc)
+
+    answer_trans_list = []
+    for idx in range(len(answer_list)):
+        page = request.GET.get('page')
+        if page == None:
+            page = 1
+            if idx == page - 1:
+                answer_trans_stc = translate(answer_list.values()[idx]["Cosentence_answer"], en)
+                answer_trans_list.append(answer_trans_stc)
+        else:
+            page = int(page)
+            if idx == page - 1:
+                answer_trans_stc = translate(answer_list.values()[idx]["Cosentence_answer"], en)
+                answer_trans_list.append(answer_trans_stc)
+
+    paginator_q = Paginator(question_list, 1)
+    paginator_q_trans = Paginator(question_trans_list, 1)
+    paginator_a = Paginator(answer_list, 1)
+    paginator_a_trans = Paginator(answer_trans_list, 1)
+
+    page = request.GET.get('page')
+
+    question = paginator_q.get_page(page)
+    question_trans = paginator_q_trans.get_page(page)
+    answer = paginator_a.get_page(page)
+    answer_trans = paginator_a_trans.get_page(page)
+
+    if request.method == "POST":
+        if "sendtext" in request.POST:
+            sendtext = request.POST["sendtext"]
+            origintext = request.POST["origintext"]
+            print(origintext)
+            print(sendtext)
+
+            sent = (sendtext, origintext)
+
+            tfidf_vec = TfidfVectorizer()
+            tfidf_mat = tfidf_vec.fit_transform(sent)
+            threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
+
+            if threshold > 0.3:
+                print(threshold)
+                print("맞았습니다.")
+                check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=origintext)
+                check_index = check_index.values()[0]["SentenceNo"]
+                check_list[check_index - 1] = True
+                print(check_list)
+
+                if all(check_list) == True:
+                    print("수료하셨습니다.")
+                else:
+                    print("수료하지 못했습니다.")
+                    print(check_list)
+
+            else:
+                print(threshold)
+                print("틀렸습니다. 다시 시도해주세요!")
+                print("수료하지 못했습니다.")
+                print(check_list)
+
+        else:
+            sendtext = False
+
+    context = {
+        "question": question,
+        "question_trans": question_trans,
+        "answer": answer,
+        "answer_trans": answer_trans,
+        "check_list": check_list,
+        "is_complete": all(check_list),
+        "chap_number": chap_number,
+        "InnerNo": 2
+    }
+
+    if request.method == "POST":
+        if "go_before3" in request.POST:
+            return redirect("main_app/chapter")
+
+    return render(request, "main_app/chap_sentence2.html", context)
+
+
+def LV1clear(request):
+    context = {
+        "chap_number": chap_number
+    }
+    return render(request, "main_app/LV1clear.html", context)
+
+
+def translate(sentence, target_lang):
+    client_id = "deribthgxo"
+    client_secret = "8NOoY9KhtwKHKZwpOQYr5bovSKA6DSctcC9eClf8"
+    encText = urllib.parse.quote(sentence)
+    data = f"source=ko&target={target_lang}&text=" + encText
+
+    url = "https://naveropenapi.apigw.ntruss.com/nmt/v1/translation"
+    request = urllib.request.Request(url)
+    request.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
+    request.add_header("X-NCP-APIGW-API-KEY", client_secret)
+    response = urllib.request.urlopen(request, data=data.encode("utf-8"))
+    rescode = response.getcode()
+
+    if (rescode == 200):
+        response_body = response.read()
+        result = response_body.decode('utf-8')
+        json_sentence = json.loads(result)
+        return json_sentence["message"]["result"]["translatedText"]
+
+    else:
+        return "Error Code:" + rescode

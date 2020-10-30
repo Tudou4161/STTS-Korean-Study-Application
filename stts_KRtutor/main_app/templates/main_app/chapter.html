@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %} -chapter {% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chapter</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        window.onload = function() {
+    
+        function onClick() {
+            document.querySelector('.modal_wrap').style.display ='block';
+            document.querySelector('.black_bg').style.display ='block';
+        }   
+        function offClick() {
+            document.querySelector('.modal_wrap').style.display ='none';
+            document.querySelector('.black_bg').style.display ='none';
+        }
+    
+        document.getElementById('modal_btn').addEventListener('click', onClick);
+        document.querySelector('.modal_close').addEventListener('click', offClick);
+    
+    };
+    </script>
+</head>
+<body>
+    <div class="chapter_container">
+        <div class="chapter_header">Welcome, {{user.get_username}}</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="chapterbox">
+                <!-- 버튼 세로 나열 -->
+                <div class="chap_line">
+                    {% for ktl in kr_trans_list %}
+                    <button type="submit" class="box" formaction="{% url 'main_app:chap_detail' ktl.0 %}">
+                        {{ ktl.0 }} {{ ktl.1 }} {{ ktl.2 }}
+                        <br />
+                    </button>
+                    {% endfor %}
+                </div>
+                <!-- 2*3 -->
+                <!-- <div class="chap_line"> 
+                    <button type="submit" class="box" formaction="/chap_detail/1">1</button>
+                    <button type="submit" class="box" formaction="/chap_detail/2">2</button>
+                    <button type="submit" class="box" formaction="/chap_detail/3">3</button>
+                </div>
+                <div class="chap_line">
+                    <button type="submit" class="box" formaction="/chap_detail/4">4</button>
+                    <button type="submit" class="box" formaction="/chap_detail/5">5</button>
+                    <button type="submit" class="box" formaction="/chap_detail/6">6</button>
+                </div> -->
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock %}
