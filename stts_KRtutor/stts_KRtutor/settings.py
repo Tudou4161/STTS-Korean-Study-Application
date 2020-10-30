@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'QnA',
     'main_app',
     'account',
+    'disqus',
+    'django.contrib.sites',
 ]
 
 
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -126,3 +128,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+#QnA 앱 댓글기능 구현
+DISQUS_WEBSITE_SHORTNAME = "KoreanSTTS"
+SITE_ID = 1
