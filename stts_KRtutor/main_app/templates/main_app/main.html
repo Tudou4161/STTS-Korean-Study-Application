@@ -4,6 +4,32 @@
 
 {% block content %}
 
-<p>안녕하시오</p>
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-in page</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <h1>Welcome, {{user.get_username}}</h1>
+        <form id = "Start Learning" method="POST">
+        <button type="submit" name="chapter" formaction="{% url 'main_app:chapter' %}">Start Learning</button>
+                {% csrf_token %}
+                <select name="trans_lang_option">
+                    <option value="vi">vietnam</option>
+                    <option value="zh-CN">chinese</option>
+                    <option value="en">English</option>
+                </select>
+        </form>
+    {% else %}
+    <h1>You must log in to use the service</h1>
+    {% endif %}
+</body>
+</html>
 
 {% endblock %}
