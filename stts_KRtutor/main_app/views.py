@@ -100,16 +100,18 @@ def chap_sentence_ES(request, cn_ChapNo):
         if "sendtext" in request.POST:
             sendtext = request.POST["sendtext"]
             origintext = request.POST["origintext"]
-            print(origintext)
-            print(sendtext)
+
+            sendtext = " ".join(list(sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(origintext.replace(" ", "").replace("?", "").replace(".", "")))
+            print(sendtext, origintext)
 
             sent = (sendtext, origintext)
 
-            tfidf_vec = TfidfVectorizer()
+            tfidf_vec = TfidfVectorizer(analyzer="char")
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.3:
+            if threshold > 0.9:
                 print("맞았습니다.")
                 print(threshold)
                 check_index = EssentialSentenceDB.objects.filter(Essentence_question=origintext)
@@ -194,16 +196,19 @@ def chap_sentence_Con(request, cn_ChapNo):
         if "sendtext" in request.POST:
             sendtext = request.POST["sendtext"]
             origintext = request.POST["origintext"]
-            print(origintext)
-            print(sendtext)
+
+            sendtext = " ".join(list(sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(origintext.replace(" ", "").replace("?", "").replace(".", "")))
+
+            print(sendtext, origintext)
 
             sent = (sendtext, origintext)
 
-            tfidf_vec = TfidfVectorizer()
+            tfidf_vec = TfidfVectorizer(analyzer="char")
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.3:
+            if threshold > 0.9:
                 print(threshold)
                 print("맞았습니다.")
                 check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=origintext)
