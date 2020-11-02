@@ -64,7 +64,7 @@ def chap_detail(request, cn_ChapNo):
     
     if request.method == "POST":
         if "go_before" in request.POST:
-            return redirect("main_app/chapter")
+            return redirect("/chapter")
 
     return render(request, 'main_app/chap_detail.html', context)
 
@@ -143,7 +143,7 @@ def chap_sentence_ES(request, cn_ChapNo):
 
     if request.method == "POST":
         if "go_before2" in request.POST:
-            return redirect("chapter")
+            return redirect("/chapter")
 
     return render(request, "main_app/chap_sentence.html", context)
 
@@ -244,7 +244,7 @@ def chap_sentence_Con(request, cn_ChapNo):
 
     if request.method == "POST":
         if "go_before3" in request.POST:
-            return redirect("main_app/chapter")
+            return redirect("/chapter")
 
     return render(request, "main_app/chap_sentence2.html", context)
 
