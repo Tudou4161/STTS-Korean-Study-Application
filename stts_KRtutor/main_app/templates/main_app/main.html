@@ -16,7 +16,7 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-    <h1>Welcome, {{user.get_username}}</h1>
+    <div class="chapter_header">Welcome, {{user.get_username}}</div>
         <form id = "Start Learning" method="POST">
         <button type="submit" name="chapter" formaction="{% url 'main_app:chapter' %}">Start Learning</button>
                 {% csrf_token %}
