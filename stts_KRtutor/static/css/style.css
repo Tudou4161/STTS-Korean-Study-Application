@@ -1,8 +1,7 @@
 /* main.html */
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-body{
-}
+
 .login_container{
     display: flex;
     flex-direction: column;
@@ -230,7 +229,31 @@ body{
     text-indent: -9999px;
 }
 
+<<<<<<< HEAD
 .col-md-8 panel panel-default{
     box-shadow: 3px;
     border:2px dotted gray;
 }    
+=======
+/* chap_sentence.html */
+
+#speech,
+#stop, 
+#text_to_speech{
+    background-color: #f5f5f5;
+    border: none; 
+    outline: none;
+}
+
+.sentencebox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.SEQSET{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+>>>>>>> 1e94edda9d7787f4c64cc73c49cdba4470690975

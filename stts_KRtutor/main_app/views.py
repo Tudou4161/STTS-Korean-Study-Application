@@ -103,9 +103,8 @@ def chap_sentence_ES(request, cn_ChapNo):
 
             sendtext = " ".join(list(_sendtext.replace(" ", "").replace("?", "").replace(".", "")))
             origintext = " ".join(list(_origintext.replace(" ", "").replace("?", "").replace(".", "")))
-
-            print(sendtext)
-            print(origintext)
+            
+            print(sendtext, origintext)
 
             sent = (sendtext, origintext)
 
@@ -199,8 +198,8 @@ def chap_sentence_Con(request, cn_ChapNo):
             _sendtext = request.POST["sendtext"]
             _origintext = request.POST["origintext"]
 
-            sendtext = " ".join(list(sendtext.replace(" ", "").replace("?", "").replace(".", "")))
-            origintext = " ".join(list(origintext.replace(" ", "").replace("?", "").replace(".", "")))
+            sendtext = " ".join(list(_sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(_origintext.replace(" ", "").replace("?", "").replace(".", "")))
 
             print(sendtext, origintext)
 
