@@ -98,12 +98,14 @@ def chap_sentence_ES(request, cn_ChapNo):
 
     if request.method == "POST":
         if "sendtext" in request.POST:
-            sendtext = request.POST["sendtext"]
-            origintext = request.POST["origintext"]
+            _sendtext = request.POST["sendtext"]
+            _origintext = request.POST["origintext"]
 
-            sendtext = " ".join(list(sendtext.replace(" ", "").replace("?", "").replace(".", "")))
-            origintext = " ".join(list(origintext.replace(" ", "").replace("?", "").replace(".", "")))
-            print(sendtext, origintext)
+            sendtext = " ".join(list(_sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(_origintext.replace(" ", "").replace("?", "").replace(".", "")))
+
+            print(sendtext)
+            print(origintext)
 
             sent = (sendtext, origintext)
 
@@ -114,7 +116,7 @@ def chap_sentence_ES(request, cn_ChapNo):
             if threshold > 0.9:
                 print("맞았습니다.")
                 print(threshold)
-                check_index = EssentialSentenceDB.objects.filter(Essentence_question=origintext)
+                check_index = EssentialSentenceDB.objects.filter(Essentence_question=_origintext)
                 check_index = check_index.values()[0]["SentenceNo"]
                 check_list[check_index - 1] = True
                 print(check_list)
@@ -194,8 +196,8 @@ def chap_sentence_Con(request, cn_ChapNo):
 
     if request.method == "POST":
         if "sendtext" in request.POST:
-            sendtext = request.POST["sendtext"]
-            origintext = request.POST["origintext"]
+            _sendtext = request.POST["sendtext"]
+            _origintext = request.POST["origintext"]
 
             sendtext = " ".join(list(sendtext.replace(" ", "").replace("?", "").replace(".", "")))
             origintext = " ".join(list(origintext.replace(" ", "").replace("?", "").replace(".", "")))
@@ -211,7 +213,7 @@ def chap_sentence_Con(request, cn_ChapNo):
             if threshold > 0.9:
                 print(threshold)
                 print("맞았습니다.")
-                check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=origintext)
+                check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=_origintext)
                 check_index = check_index.values()[0]["SentenceNo"]
                 check_list[check_index - 1] = True
                 print(check_list)

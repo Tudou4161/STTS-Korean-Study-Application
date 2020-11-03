@@ -229,3 +229,8 @@ body{
     background:url(https://img.icons8.com/metro/26/000000/close-window.png);
     text-indent: -9999px;
 }
+
+.col-md-8 panel panel-default{
+    box-shadow: 3px;
+    border:2px dotted gray;
+}    
