@@ -13,7 +13,7 @@ def QnA_list(request):
 def MyQnA(request):
     userid = request.user
     
-    MyQnAs = QuestionAndAnswer.objects.filter(author=userid).order_by("hit")
+    MyQnAs = QuestionAndAnswer.objects.filter(author=userid.id).order_by("hit")
         
     return render(request, "QnA/myqna.html", context={"MyQnAs": MyQnAs})
 

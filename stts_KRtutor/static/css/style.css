@@ -229,12 +229,6 @@
     text-indent: -9999px;
 }
 
-<<<<<<< HEAD
-.col-md-8 panel panel-default{
-    box-shadow: 3px;
-    border:2px dotted gray;
-}    
-=======
 /* chap_sentence.html */
 
 #speech,
@@ -256,4 +250,9 @@
     justify-content: center;
     align-items: center;
 }
->>>>>>> 1e94edda9d7787f4c64cc73c49cdba4470690975
+
+
+.update_counter{
+    display: none;
+}
+
