@@ -249,12 +249,27 @@ def chap_sentence_Con(request, cn_ChapNo):
 
     return render(request, "main_app/chap_sentence2.html", context)
 
-
-def LV1clear(request, cn_ChapNo):
+def clear(request, cn_ChapNo):
     context = {
         "chap_number": chap_number
     }
-    return render(request, "main_app/LV1clear.html", context)
+    
+    if request.method == "POST":
+        if "go_detail" in request.POST:
+            return redirect('main_app:chap_detail',cn_ChapNo)
+
+    return render(request, "main_app/clear.html", context)
+
+def clear2(request, cn_ChapNo):
+    context = {
+        "chap_number": chap_number
+    }
+
+    if request.method == "POST":
+        if "go_chapter" in request.POST:
+            return redirect('main_app:chapter')
+
+    return render(request, "main_app/clear2.html", context)
 
 
 def translate(sentence, target_lang):

@@ -209,14 +209,14 @@
             <button id="next" onclick = "location.href = '?page={{ sentences.next_page_number }}' ">Next</button>
             {% endif %}
 
-        <div>
-            {% if is_complete == True %}
-            <form method="POST">
-                {% csrf_token %}
-                <button type="submit" formaction="chap_sentence/LV1clear">수료 완료!</button>
-            </form>
-        {% endif %}
-        </div>
+            <div>
+                {% if is_complete == True %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" formaction="chap_sentence/clear">수료 완료!</button>
+                    </form>
+                {% endif %}
+            </div>
         
         
     </div>
