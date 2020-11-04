@@ -13,6 +13,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chapter</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .chap_LV#box1{
+            background: url({% static 'img/대화1_1.PNG' %})no-repeat;
+        }
+        .chap_LV#box2{
+            background: url({% static 'img/대화2_1.PNG' %})no-repeat;
+        }
+        .chap_LV#box1:hover{
+            background: url({% static 'img/대화1.PNG' %})no-repeat;
+        }
+        .chap_LV#box2:hover{
+            background: url({% static 'img/대화2.PNG' %})no-repeat;
+        }
+        .chap_LV{
+            font-size: 30px;
+            font-weight: bolder;
+        }
+    </style>
 </head>
 <body>
     <div id="re_chap">
@@ -28,9 +46,9 @@
             {% csrf_token %}
             <div class="chapterbox">
                 <div class="chap_line">
-                    <button type="submit" class="chap_LV" name="lv1" value="1" formaction="chap_detail/chap_sentence"> LV. {{ chap_detail.InnerChapOne }} </button>
+                    <button type="submit" class="chap_LV" id="box1" name="lv1" value="1" formaction="chap_detail/chap_sentence"> LV. {{ chap_detail.InnerChapOne }} </button>
                 
-                    <button type="submit" class="chap_LV" name="lv2" value="2" formaction="chap_detail/chap_sentence2"> LV. {{ chap_detail.InnerChapTwo }} </button>
+                    <button type="submit" class="chap_LV" id="box2" name="lv2" value="2" formaction="chap_detail/chap_sentence2"> LV. {{ chap_detail.InnerChapTwo }} </button>
                     <!-- disabled="disabled" -->
                 </div>
             </div>
@@ -38,5 +56,3 @@
     </div>
 </body>
 </html>
-
-{% endblock %}
