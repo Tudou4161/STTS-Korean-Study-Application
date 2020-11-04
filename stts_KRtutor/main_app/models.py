@@ -61,6 +61,6 @@ class ConversationPracticeAnswerDB(models.Model): #발화실습 답변(STT) 데�
         return f"{self.Cosentence_answer}"
 
 class TipsDB(models.Model):
-    ChapNo = models.IntegerField(),
+    ChapNo = models.IntegerField()
     InnerNo = models.IntegerField(),
     TipSentence = models.CharField(max_length=1000)
