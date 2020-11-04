@@ -211,11 +211,11 @@
 
         <div>
             {% if is_complete == True %}
-                <form method="POST">
-                    {% csrf_token %}
-                    <button type="submit" formaction="/LV1clear">수료 완료!</button>
-                </form>
-            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" formaction="chap_sentence/LV1clear">수료 완료!</button>
+            </form>
+        {% endif %}
         </div>
         
         

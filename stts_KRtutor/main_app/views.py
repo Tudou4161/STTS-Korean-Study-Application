@@ -250,7 +250,7 @@ def chap_sentence_Con(request, cn_ChapNo):
     return render(request, "main_app/chap_sentence2.html", context)
 
 
-def LV1clear(request):
+def LV1clear(request, cn_ChapNo):
     context = {
         "chap_number": chap_number
     }
