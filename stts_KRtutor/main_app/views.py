@@ -13,6 +13,7 @@ import os
 import sys
 import urllib.request
 import copy
+import csv
 
 # Create your views here.
 def main(request):
@@ -63,7 +64,7 @@ def chap_detail(request, cn_ChapNo):
     
     if request.method == "POST":
         if "go_before" in request.POST:
-            return redirect("main_app/chapter")
+            return redirect("/chapter")
 
     return render(request, 'main_app/chap_detail.html', context)
 
@@ -97,21 +98,24 @@ def chap_sentence_ES(request, cn_ChapNo):
 
     if request.method == "POST":
         if "sendtext" in request.POST:
-            sendtext = request.POST["sendtext"]
-            origintext = request.POST["origintext"]
-            print(origintext)
-            print(sendtext)
+            _sendtext = request.POST["sendtext"]
+            _origintext = request.POST["origintext"]
+
+            sendtext = " ".join(list(_sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(_origintext.replace(" ", "").replace("?", "").replace(".", "")))
+            
+            print(sendtext, origintext)
 
             sent = (sendtext, origintext)
 
-            tfidf_vec = TfidfVectorizer()
+            tfidf_vec = TfidfVectorizer(analyzer="char")
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.3:
+            if threshold > 0.9:
                 print("맞았습니다.")
                 print(threshold)
-                check_index = EssentialSentenceDB.objects.filter(Essentence_question=origintext)
+                check_index = EssentialSentenceDB.objects.filter(Essentence_question=_origintext)
                 check_index = check_index.values()[0]["SentenceNo"]
                 check_list[check_index - 1] = True
                 print(check_list)
@@ -140,12 +144,12 @@ def chap_sentence_ES(request, cn_ChapNo):
 
     if request.method == "POST":
         if "go_before2" in request.POST:
-            return redirect("chapter")
+            return redirect("/chapter")
 
     return render(request, "main_app/chap_sentence.html", context)
 
 
-def chap_sentence_Con(request):
+def chap_sentence_Con(request, cn_ChapNo):
     question_list = ConversationPracticeQuestionDB.objects.filter(ChapNo=chap_number, InnerNo=2)
     answer_list = ConversationPracticeAnswerDB.objects.filter(ChapNo=chap_number, InnerNo=2)
 
@@ -191,21 +195,24 @@ def chap_sentence_Con(request):
 
     if request.method == "POST":
         if "sendtext" in request.POST:
-            sendtext = request.POST["sendtext"]
-            origintext = request.POST["origintext"]
-            print(origintext)
-            print(sendtext)
+            _sendtext = request.POST["sendtext"]
+            _origintext = request.POST["origintext"]
+
+            sendtext = " ".join(list(_sendtext.replace(" ", "").replace("?", "").replace(".", "")))
+            origintext = " ".join(list(_origintext.replace(" ", "").replace("?", "").replace(".", "")))
+
+            print(sendtext, origintext)
 
             sent = (sendtext, origintext)
 
-            tfidf_vec = TfidfVectorizer()
+            tfidf_vec = TfidfVectorizer(analyzer="char")
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.3:
+            if threshold > 0.9:
                 print(threshold)
                 print("맞았습니다.")
-                check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=origintext)
+                check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=_origintext)
                 check_index = check_index.values()[0]["SentenceNo"]
                 check_list[check_index - 1] = True
                 print(check_list)
@@ -238,12 +245,12 @@ def chap_sentence_Con(request):
 
     if request.method == "POST":
         if "go_before3" in request.POST:
-            return redirect("main_app/chapter")
+            return redirect("/chapter")
 
     return render(request, "main_app/chap_sentence2.html", context)
 
 
-def LV1clear(request):
+def LV1clear(request, cn_ChapNo):
     context = {
         "chap_number": chap_number
     }
@@ -271,3 +278,58 @@ def translate(sentence, target_lang):
 
     else:
         return "Error Code:" + rescode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\Essential_sentence.csv"
+# # sentence 데이터베이스 저장하기
+# # 아래 파일들은 주석을 하나씩 해제해서, 집어넣어야함.
+# # 그렇게 안하면, 매우 큰 문제가 발생합니다.....^^
+# with open(csv_path, 'r', encoding='utf-8') as csvfile:
+#     data_reader = csv.DictReader(csvfile)
+#     for row in data_reader:
+#         print(row)
+#         EssentialSentenceDB.objects.create(
+#             ChapNo=row["chap_no"],
+#             InnerNo=row["inner_no"],
+#             SentenceNo=row["sentence_no"],
+#             Essentence_question=row["sentence"]
+#         )
+
+# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\answer_sentence.csv"
+# # sentence 데이터베이스 저장하기
+# with open(csv_path, 'r', encoding='utf-8') as csvfile:
+#     data_reader = csv.DictReader(csvfile)
+#     for row in data_reader:
+#         print(row)
+#         ConversationPracticeAnswerDB.objects.create(
+#             ChapNo=row["chap_no"],
+#             InnerNo=row["inner_no"],
+#             SentenceNo=row["sentence_no"],
+#             Cosentence_answer=row["sentence"]
+#         )
+
+# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\TTS_sentence.csv"
+# # sentence 데이터베이스 저장하기
+# with open(csv_path, 'r', encoding='utf-8') as csvfile:
+#     data_reader = csv.DictReader(csvfile)
+#     for row in data_reader:
+#         print(row)
+#         ConversationPracticeQuestionDB.objects.create(
+#             ChapNo=row["chap_no"],
+#             InnerNo=row["inner_no"],
+#             SentenceNo=row["sentence_no"],
+#             Cosentence_question=row["sentence"]
+#         )

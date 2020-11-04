@@ -1,8 +1,7 @@
 /* main.html */
 
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-body{
-}
+
 .login_container{
     display: flex;
     flex-direction: column;
@@ -147,6 +146,8 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    padding:3% 0 3% 0;
 }
 
 .box{
@@ -229,3 +230,36 @@ body{
     background:url(https://img.icons8.com/metro/26/000000/close-window.png);
     text-indent: -9999px;
 }
+
+/* chap_sentence.html */
+
+#speech,
+#stop, 
+#text_to_speech{
+    background-color: #f5f5f5;
+    border: none; 
+    outline: none;
+}
+
+/* sentence 내의 문장 글자크기 및 굵기 조정 */
+.sentencebox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.chapterbox p{
+    font-size: 20px;
+}
+.textWrapper #korea{
+    font-size: 20px;
+}
+
+.SEQSET{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

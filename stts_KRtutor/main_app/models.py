@@ -1,4 +1,7 @@
 from django.db import models
+
+# Create your models here.
+from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -57,7 +60,7 @@ class ConversationPracticeAnswerDB(models.Model): #발화실습 답변(STT) 데�
     def __str__(self):
         return f"{self.Cosentence_answer}"
 
-# class TipsDB(models.Model):
-#     ChapNo = models.IntegerField(),
-#     InnerNo = models.IntegerField(),
-#     TipSentence = models.CharField(max_length=1000)
+class TipsDB(models.Model):
+    ChapNo = models.IntegerField(),
+    InnerNo = models.IntegerField(),
+    TipSentence = models.CharField(max_length=1000)
