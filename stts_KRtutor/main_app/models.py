@@ -59,3 +59,9 @@ class ConversationPracticeAnswerDB(models.Model): #발화실습 답변(STT) 데�
     
     def __str__(self):
         return f"{self.Cosentence_answer}"
+
+class TipsOnModal(models.Model):
+    description = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f"{self.description}"

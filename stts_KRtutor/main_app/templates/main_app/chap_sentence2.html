@@ -55,13 +55,18 @@
     </script>
 </head>
 <body>
-    <div class="help_box"> <!-- 로그아웃 모달창 -->
+    <div class="help_box">
         <button type='button' id="modal_btn">help</button>
         <div class="black_bg"></div>
         <div class="modal_wrap">
             <div class="modal_close"><a href="#">close</a></div>
             <div>
                 <img src="{% static 'img/설명이미지.png' %}" alt="설명이미지">
+            </div>
+            <div>
+                {% for stc in modal_sent_list %}
+                        <div>{{ forloop.counter }}. {{ stc }}</div>
+                    {% endfor %}
             </div>
         </div>
     </div>

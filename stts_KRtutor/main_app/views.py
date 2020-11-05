@@ -6,7 +6,7 @@ from django.contrib import auth
 # 페이지 네이터 모듈 추가
 from django.core.paginator import Paginator
 from .models import CheckProcess
-from .models import EssentialSentenceDB, ConversationPracticeQuestionDB, ConversationPracticeAnswerDB
+from .models import EssentialSentenceDB, ConversationPracticeQuestionDB, ConversationPracticeAnswerDB, TipsOnModal
 from .models import ChapterNumberDB
 import json
 import os
@@ -71,6 +71,12 @@ def chap_detail(request, cn_ChapNo):
 
 def chap_sentence_ES(request, cn_ChapNo):
     sentence_list = EssentialSentenceDB.objects.filter(ChapNo=chap_number, InnerNo=1)
+    modal_sentences = TipsOnModal.objects.all()
+    
+    modal_sent_list = []
+    for index in range(len(modal_sentences)):
+        trans_stc_modal = translate(modal_sentences.values()[index]["description"], en)
+        modal_sent_list.append(trans_stc_modal)
 
     trans_list = []
     for idx in range(len(sentence_list)):
@@ -139,7 +145,8 @@ def chap_sentence_ES(request, cn_ChapNo):
         "check_list": check_list,
         "is_complete": all(check_list),
         "chap_number": chap_number,
-        "InnerNo": 1
+        "InnerNo": 1,
+        "modal_sent_list": modal_sent_list
     }
 
     if request.method == "POST":
@@ -152,6 +159,13 @@ def chap_sentence_ES(request, cn_ChapNo):
 def chap_sentence_Con(request, cn_ChapNo):
     question_list = ConversationPracticeQuestionDB.objects.filter(ChapNo=chap_number, InnerNo=2)
     answer_list = ConversationPracticeAnswerDB.objects.filter(ChapNo=chap_number, InnerNo=2)
+
+    modal_sentences = TipsOnModal.objects.all()
+    
+    modal_sent_list = []
+    for index in range(len(modal_sentences)):
+        trans_stc_modal = translate(modal_sentences.values()[index]["description"], en)
+        modal_sent_list.append(trans_stc_modal)
 
     question_trans_list = []
     for idx in range(len(question_list)):
@@ -240,7 +254,8 @@ def chap_sentence_Con(request, cn_ChapNo):
         "check_list": check_list,
         "is_complete": all(check_list),
         "chap_number": chap_number,
-        "InnerNo": 2
+        "InnerNo": 2,
+        "modal_sent_list": modal_sent_list,
     }
 
     if request.method == "POST":
@@ -347,4 +362,15 @@ def translate(sentence, target_lang):
 #             InnerNo=row["inner_no"],
 #             SentenceNo=row["sentence_no"],
 #             Cosentence_question=row["sentence"]
+#         )
+
+
+# csv_path = r"C:\Users\WIN10\Desktop\deploy_3\Deploy_Final_Project\stts_KRtutor\description.csv"
+# # sentence 데이터베이스 저장하기
+# with open(csv_path, 'r', encoding='utf-8') as csvfile:
+#     data_reader = csv.DictReader(csvfile)
+#     for row in data_reader:
+#         print(row)
+#         TipsOnModal.objects.create(
+#             description = row["description"]
 #         )
