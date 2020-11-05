@@ -35,9 +35,41 @@
          p{
              text-align: center;
          }
-    </style>   
+    </style>
+    <script> /* 모달창용 자바스크립트 */
+        window.onload = function() {
+
+        function onClick() {
+            document.querySelector('.modal_wrap').style.display ='block';
+            document.querySelector('.black_bg').style.display ='block';
+        }   
+        function offClick() {
+            document.querySelector('.modal_wrap').style.display ='none';
+            document.querySelector('.black_bg').style.display ='none';
+        }
+
+        document.getElementById('modal_btn').addEventListener('click', onClick);
+        document.querySelector('.modal_close').addEventListener('click', offClick);
+
+    };
+    </script>
 </head>
 <body>
+    <div class="help_box"> <!-- 로그아웃 모달창 -->
+        <button type='button' id="modal_btn">help</button>
+        <div class="black_bg"></div>
+        <div class="modal_wrap">
+            <div class="modal_close"><a href="#">close</a></div>
+            <div>
+                <img src="{% static 'img/설명이미지.png' %}" alt="설명이미지">
+            </div>
+            <div>
+                {% for stc_trans in sentences_trans %}
+                        <div id="SET">{{ stc_trans }}</div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
     <div id="re_chap"> <!-- 챕터로 돌아가기 -->
         <form method="POST">
             {% csrf_token %}
@@ -57,7 +89,7 @@
             {% endfor %}
             </div>
         <div class="chapterbox">
-            <p id="message">버튼을 누르고 아무말이나 하세요.</p>
+           
 
             <br />
             <div class="sentencebox">
