@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stts_KRtutor.urls'
@@ -77,8 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stts_KRtutor.wsgi.application'
 
-
-
 # Use a in-memory sqlite3 database when testing in CI systems
 
 DATABASES = {
@@ -87,7 +86,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -127,7 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/static/"
+#STATIC_ROOT = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
