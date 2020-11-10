@@ -1,1 +1,0 @@
-web: gunicorn stts_KRtutor.wsgi --log-file -

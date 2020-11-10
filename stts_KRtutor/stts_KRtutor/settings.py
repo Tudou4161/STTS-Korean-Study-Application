@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import sys
 
 sys.modules['django.utils.six.moves.urllib.parse'] = __import__('six.moves.urllib_parse', fromlist=['urlencode'])
 sys.modules['django.utils.six.moves.urllib.request'] = __import__('six.moves.urllib_request', fromlist=['urlopen'])
@@ -27,9 +28,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@$&9+)k3^=(k@rrmd)j8-sxk6rwhj-wm#b_xii56of=i-)(8_u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = [ ]
+#ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 
 # Application definition
@@ -57,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stts_KRtutor.urls'
@@ -88,7 +90,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-DATABASES["default"].update(dj_database_url.config(conn_max_age=500))
+#DATABASES["default"].update(dj_database_url.config(conn_max_age=500))
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -129,7 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #STATIC_ROOT = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+#STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
