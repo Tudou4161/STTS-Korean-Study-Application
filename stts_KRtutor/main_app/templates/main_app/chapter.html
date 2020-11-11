@@ -55,6 +55,10 @@
         .box{
             font-size: 30px;
             font-weight: bolder;
+            flex-direction: column;
+        }
+        .crown{
+            margin-top: -60px;
         }
     </style>
 </head>
@@ -67,21 +71,27 @@
                 <!-- 버튼 세로 나열 -->
                 <div class="chap_line">
                     <button type="submit" class="box" id="box1" formaction="{% url 'main_app:chap_detail' 1 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.0.0}}. {{kr_trans_list.0.1}} {{kr_trans_list.0.2}}
                     </button>
                     <button type="submit" class="box" id="box2" formaction="{% url 'main_app:chap_detail' 2 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.1.0}}. {{kr_trans_list.1.1}} {{kr_trans_list.1.2}}
                     </button>
                     <button type="submit" class="box" id="box3" formaction="{% url 'main_app:chap_detail' 3 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.2.0}}. {{kr_trans_list.2.1}} {{kr_trans_list.2.2}}
                     </button>
                     <button type="submit" class="box" id="box4" formaction="{% url 'main_app:chap_detail' 4 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.3.0}}. {{kr_trans_list.3.1}} {{kr_trans_list.3.2}}
                     </button>
                     <button type="submit" class="box" id="box5" formaction="{% url 'main_app:chap_detail' 5 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.4.0}}. {{kr_trans_list.4.1}} {{kr_trans_list.4.2}}
                     </button>
                     <button type="submit" class="box" id="box6" formaction="{% url 'main_app:chap_detail' 6 %}">
+                        <img src="{% static 'img/crown.png' %}" class="crown">
                         {{kr_trans_list.5.0}}. {{kr_trans_list.5.1}} {{kr_trans_list.5.2}}
                     </button>
 
