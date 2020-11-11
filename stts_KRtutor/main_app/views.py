@@ -6,7 +6,7 @@ from django.contrib import auth
 # 페이지 네이터 모듈 추가
 from django.core.paginator import Paginator
 from .models import CheckProcess
-from .models import EssentialSentenceDB, ConversationPracticeQuestionDB, ConversationPracticeAnswerDB, TipsOnModal
+from .models import EssentialSentenceDB, ConversationPracticeQuestionDB, ConversationPracticeAnswerDB, TipsOnModal, CheckProcess
 from .models import ChapterNumberDB
 import json
 import os
@@ -21,6 +21,22 @@ def main(request):
 
 def chapter(request):
     chap_no = ChapterNumberDB.objects.all()
+    
+    #왕관 구현에 필요한 뷰 코드!
+    curr_user = request.user
+    chap_row = CheckProcess.objects.filter(user_id=curr_user.id)
+    
+    chap_check_list = [chap_row.values()[0]["chap_1"], chap_row.values()[0]["chap_2"], chap_row.values()[0]["chap_3"],
+                        chap_row.values()[0]["chap_4"], chap_row.values()[0]["chap_5"], chap_row.values()[0]["chap_6"]]
+
+    chap_config = []
+    for elem in chap_check_list:
+        if elem == 0: 
+            chap_config.append(None) #None값이면 템플릿에서 왕관 출력안됨
+        else:
+            chap_config.append(elem) #0이 아니라 1이상이면 템플릿에 왕관 출력
+
+
 
     global en
 
@@ -38,7 +54,8 @@ def chapter(request):
 
     context = {
         'chap_number': chap_no,
-        'kr_trans_list': kr_trans_list
+        'kr_trans_list': kr_trans_list,
+        'chap_check': chap_config
     }
 
     return render(request, "main_app/chapter.html", context)

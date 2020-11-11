@@ -11,13 +11,13 @@ from django.contrib.auth.models import User
 # update 함수를 짠다.
 
 class CheckProcess(models.Model):
-    user = models.ForeignKey(User, related_name="checkprocess", on_delete=models.CASCADE)
-    chap_1 = models.IntegerField(default=1)
-    chap_2 = models.IntegerField(default=1)
-    chap_3 = models.IntegerField(default=1)
-    chap_4 = models.IntegerField(default=1)
-    chap_5 = models.IntegerField(default=1)
-    chap_6 = models.IntegerField(default=1)
+    user = models.OneToOneField(User, related_name="user_checkprocess", on_delete=models.CASCADE)
+    chap_1 = models.IntegerField(default=0)
+    chap_2 = models.IntegerField(default=0)
+    chap_3 = models.IntegerField(default=0)
+    chap_4 = models.IntegerField(default=0)
+    chap_5 = models.IntegerField(default=0)
+    chap_6 = models.IntegerField(default=0)
     # def __str__(self):
     #     return f"{self.user.get_username()}"
 
