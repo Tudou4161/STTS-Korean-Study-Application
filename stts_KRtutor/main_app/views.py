@@ -31,12 +31,10 @@ def chapter(request):
 
     chap_config = []
     for elem in chap_check_list:
-        if elem == 0: 
+        if elem == 0 or elem == 1: 
             chap_config.append(None) #None값이면 템플릿에서 왕관 출력안됨
-        else:
+        elif elem == 2:
             chap_config.append(elem) #0이 아니라 1이상이면 템플릿에 왕관 출력
-
-
 
     global en
 
@@ -72,7 +70,7 @@ def chap_detail(request, cn_ChapNo):
     check_list = [False] * len(sentence_list)
 
     global check_list2
-    sentence_list2 = ConversationPracticeQuestionDB.objects.filter(ChapNo=chap_number, InnerNo=2)
+    sentence_list2 = ConversationPracticeAnswerDB.objects.filter(ChapNo=chap_number, InnerNo=2)
     check_list2 = [False] * len(sentence_list2)
 
     context = {
@@ -135,7 +133,7 @@ def chap_sentence_ES(request, cn_ChapNo):
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.9:
+            if threshold >= 0.0:
                 print("맞았습니다.")
                 print(threshold)
                 check_index = EssentialSentenceDB.objects.filter(Essentence_question=_origintext)
@@ -145,6 +143,7 @@ def chap_sentence_ES(request, cn_ChapNo):
 
                 if all(check_list) == True:
                     print("수료하셨습니다.")
+
                 else:
                     print("수료하지 못했습니다.")
 
@@ -240,25 +239,26 @@ def chap_sentence_Con(request, cn_ChapNo):
             tfidf_mat = tfidf_vec.fit_transform(sent)
             threshold = cosine_similarity(tfidf_mat[0:1], tfidf_mat[1:2])
 
-            if threshold > 0.9:
+            if threshold >= 0.0:
                 print(threshold)
                 print("맞았습니다.")
                 check_index = ConversationPracticeAnswerDB.objects.filter(Cosentence_answer=_origintext)
                 check_index = check_index.values()[0]["SentenceNo"]
-                check_list[check_index - 1] = True
-                print(check_list)
+                check_list2[check_index - 1] = True
+                print(check_list2)
 
                 if all(check_list) == True:
                     print("수료하셨습니다.")
+
                 else:
                     print("수료하지 못했습니다.")
-                    print(check_list)
+                    print(check_list2)
 
             else:
                 print(threshold)
                 print("틀렸습니다. 다시 시도해주세요!")
                 print("수료하지 못했습니다.")
-                print(check_list)
+                print(check_list2)
 
         else:
             sendtext = False
@@ -268,8 +268,8 @@ def chap_sentence_Con(request, cn_ChapNo):
         "question_trans": question_trans,
         "answer": answer,
         "answer_trans": answer_trans,
-        "check_list": check_list,
-        "is_complete": all(check_list),
+        "check_list2": check_list2,
+        "is_complete": all(check_list2),
         "chap_number": chap_number,
         "InnerNo": 2,
         "modal_sent_list": modal_sent_list,
@@ -281,7 +281,41 @@ def chap_sentence_Con(request, cn_ChapNo):
 
     return render(request, "main_app/chap_sentence2.html", context)
 
+
 def clear(request, cn_ChapNo):
+
+    curr_user = request.user
+    print(curr_user.id)
+    row = CheckProcess.objects.filter(user_id=curr_user.id).get()
+
+    for _ in range(1):
+        if cn_ChapNo == int(list("chap_1")[-1]):
+            if row.chap_1 < 2:
+                row.chap_1 = 1
+                row.save()
+        elif cn_ChapNo == int(list("chap_2")[-1]):
+            if row.chap_2 < 2:
+                row.chap_2 = 1
+                row.save()
+        elif cn_ChapNo == int(list("chap_3")[-1]):
+            if row.chap_3 < 2:
+                row.chap_3 = 1
+                row.save()
+        elif cn_ChapNo == int(list("chap_4")[-1]):
+            if row.chap_4 < 2:
+                row.chap_4 = 1
+                row.save()
+        elif cn_ChapNo == int(list("chap_5")[-1]):
+            if row.chap_5 < 2:
+                row.chap_5 = 1
+                row.save()
+        elif cn_ChapNo == int(list("chap_6")[-1]):
+            if row.chap_6 < 2:
+                row.chap_6 = 1
+                row.save()
+        else:
+            pass
+
     context = {
         "chap_number": chap_number
     }
@@ -292,7 +326,34 @@ def clear(request, cn_ChapNo):
 
     return render(request, "main_app/clear.html", context)
 
+
 def clear2(request, cn_ChapNo):
+    curr_user = request.user
+    print(curr_user.id)
+    row = CheckProcess.objects.filter(user_id=curr_user.id).get()
+
+    for _ in range(1):
+        if cn_ChapNo == int(list("chap_1")[-1]):
+            row.chap_1 = 2
+            row.save()
+        elif cn_ChapNo == int(list("chap_2")[-1]):
+            row.chap_2 = 2
+            row.save()
+        elif cn_ChapNo == int(list("chap_3")[-1]):
+            row.chap_3 = 2
+            row.save()
+        elif cn_ChapNo == int(list("chap_4")[-1]):
+            row.chap_4 = 2
+            row.save()
+        elif cn_ChapNo == int(list("chap_5")[-1]):
+            row.chap_5 = 2
+            row.save()
+        elif cn_ChapNo == int(list("chap_6")[-1]):
+            row.chap_6 = 2
+            row.save()
+        else:
+            pass
+    
     context = {
         "chap_number": chap_number
     }

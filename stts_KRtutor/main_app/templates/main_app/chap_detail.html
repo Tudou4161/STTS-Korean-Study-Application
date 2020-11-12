@@ -46,9 +46,9 @@
             {% csrf_token %}
             <div class="chapterbox">
                 <div class="chap_line">
-                    <button type="submit" class="chap_LV" id="box1" name="lv1" value="1" formaction="chap_detail/chap_sentence"> LV. {{ chap_detail.InnerChapOne }} </button>
+                    <button type="submit" class="chap_LV" id="box1" name="lv1" value="1" formaction="chap_detail/chap_sentence"> LV. {{ chap_detail.InnerChapOne }}. 필수문장 학습 </button>
                 
-                    <button type="submit" class="chap_LV" id="box2" name="lv2" value="2" formaction="chap_detail/chap_sentence2"> LV. {{ chap_detail.InnerChapTwo }} </button>
+                    <button type="submit" class="chap_LV" id="box2" name="lv2" value="2" formaction="chap_detail/chap_sentence2"> LV. {{ chap_detail.InnerChapTwo }}. 핵심회화 </button>
                     <!-- disabled="disabled" -->
                 </div>
             </div>

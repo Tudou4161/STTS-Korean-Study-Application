@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CheckProcess, ConversationPracticeAnswerDB, ConversationPracticeQuestionDB, EssentialSentenceDB, ChapterNumberDB, TipsOnModal
+from .models import CheckProcess, ConversationPracticeAnswerDB, ConversationPracticeQuestionDB, EssentialSentenceDB, ChapterNumberDB, TipsOnModal, CheckProcessTable
 
 
 

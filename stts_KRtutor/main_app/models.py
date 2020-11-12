@@ -65,3 +65,10 @@ class TipsOnModal(models.Model):
 
     def __str__(self):
         return f"{self.description}"
+
+
+class CheckProcessTable(models.Model):
+    user = models.OneToOneField(User, related_name="user_checktable", on_delete=models.CASCADE)
+    ChapNo = models.IntegerField()  #갱신 시 cn_chapno를 넣어줌
+    InnerChapNo = models.IntegerField() #갱신 시 뷰 함수 내부에서 정의한 정수 값을 바탕으로 내부챕터 넘버를 갱신해준다.
+    is_check = models.IntegerField(default=0)

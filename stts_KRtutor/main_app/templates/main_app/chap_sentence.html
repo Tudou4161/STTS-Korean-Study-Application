@@ -80,7 +80,7 @@
     <div class="chapter_container">
         <div class="chapter_header"> chapter{{ chap_number }} - level{{ InnerNo }} </div>
             <div class="check_list">
-            {% for check in check_list%}
+            {% for check in check_list %}
                 {% if check == False %}
                     <img src="{% static 'img/non-check-mark-303498_30.png' %}">
                 {% else %}
@@ -113,6 +113,7 @@
                 </div>
             </form>
 
+            <p id="message">음성인식 버튼을 누르세요</p>
             <button id="speech" onclick="speech_to_text()"><img src="{% static 'img/STT.PNG' %}"></button>
             <button id="stop" onclick="stop()"><img src="{% static 'img/STOP.PNG' %}"></button>
 
