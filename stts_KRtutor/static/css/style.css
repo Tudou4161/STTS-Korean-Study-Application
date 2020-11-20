@@ -231,8 +231,8 @@
     text-indent: -9999px;
 }
 
-/* chap_sentence.html */
 
+/* chap_sentence.html */
 #speech,
 #stop, 
 #text_to_speech{
@@ -261,4 +261,73 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+/* chapter.html */
+.box#box1{
+    background: url({% static 'img/환불 이미지_1.PNG' %})no-repeat;
+}
+.box#box2{
+    background: url({% static 'img/식당 이미지_1.PNG' %})no-repeat;
+}
+.box#box3{
+    background: url({% static 'img/경찰 이미지_1.PNG' %})no-repeat;
+}
+.box#box4{
+    background: url({% static 'img/구급대원 이미지_1.PNG' %})no-repeat;
+}
+.box#box5{
+    background: url({% static 'img/택시 이미지_1.PNG' %})no-repeat;
+}
+.box#box6{
+    background: url({% static 'img/보이스피싱 이미지_1.PNG' %})no-repeat;
+}
+
+.box#box1:hover{
+    background: url({% static 'img/환불 이미지.PNG' %})no-repeat;
+}
+.box#box2:hover{
+    background: url({% static 'img/식당 이미지.PNG' %})no-repeat;
+}
+.box#box3:hover{
+    background: url({% static 'img/경찰 이미지.PNG' %})no-repeat;
+}
+.box#box4:hover{
+    background: url({% static 'img/구급대원 이미지.PNG' %})no-repeat;
+}
+.box#box5:hover{
+    background: url({% static 'img/택시 이미지.PNG' %})no-repeat;
+}
+.box#box6:hover{
+    background: url({% static 'img/보이스피싱 이미지.PNG' %})no-repeat;
+}
+
+.box{
+    font-size: 30px;
+    font-weight: bolder;
+    flex-direction: column;
+}
+.crown{
+    margin-top: -60px;
+}
+
+
+
+/* chap_detail.html */
+.chap_LV#box1{
+    background: url({% static 'img/대화1_1.PNG' %})no-repeat;
+}
+.chap_LV#box2{
+    background: url({% static 'img/대화2_1.PNG' %})no-repeat;
+}
+.chap_LV#box1:hover{
+    background: url({% static 'img/대화1.PNG' %})no-repeat;
+}
+.chap_LV#box2:hover{
+    background: url({% static 'img/대화2.PNG' %})no-repeat;
+}
+.chap_LV{
+    font-size: 30px;
+    font-weight: bolder;
 }

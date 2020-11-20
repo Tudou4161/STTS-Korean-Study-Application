@@ -36,6 +36,7 @@ def chapter(request):
         elif elem == 2:
             chap_config.append(elem) #0이 아니라 1이상이면 템플릿에 왕관 출력
 
+
     global en
 
     if request.method == "POST":
@@ -401,7 +402,7 @@ def translate(sentence, target_lang):
 
 
 
-# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\Essential_sentence.csv"
+# csv_path = r"C:\Users\WIN10\Desktop\final_pj\Deploy_Final_Project\stts_KRtutor\main_app\data\Essential_sentence.csv"
 # # sentence 데이터베이스 저장하기
 # # 아래 파일들은 주석을 하나씩 해제해서, 집어넣어야함.
 # # 그렇게 안하면, 매우 큰 문제가 발생합니다.....^^
@@ -416,7 +417,7 @@ def translate(sentence, target_lang):
 #             Essentence_question=row["sentence"]
 #         )
 
-# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\answer_sentence.csv"
+# csv_path = r"C:\Users\WIN10\Desktop\final_pj\Deploy_Final_Project\stts_KRtutor\main_app\data\answer_sentence.csv"
 # # sentence 데이터베이스 저장하기
 # with open(csv_path, 'r', encoding='utf-8') as csvfile:
 #     data_reader = csv.DictReader(csvfile)
@@ -429,7 +430,7 @@ def translate(sentence, target_lang):
 #             Cosentence_answer=row["sentence"]
 #         )
 
-# csv_path = r"C:\Users\WIN10\Desktop\Deploy_final_project\Deploy_Final_Project\stts_KRtutor\main_app\data\TTS_sentence.csv"
+# csv_path = r"C:\Users\WIN10\Desktop\final_pj\Deploy_Final_Project\stts_KRtutor\main_app\data\TTS_sentence.csv"
 # # sentence 데이터베이스 저장하기
 # with open(csv_path, 'r', encoding='utf-8') as csvfile:
 #     data_reader = csv.DictReader(csvfile)
@@ -443,7 +444,7 @@ def translate(sentence, target_lang):
 #         )
 
 
-# csv_path = r"C:\Users\WIN10\Desktop\deploy_3\Deploy_Final_Project\stts_KRtutor\description.csv"
+# csv_path = r"C:\Users\WIN10\Desktop\final_pj\Deploy_Final_Project\stts_KRtutor\main_app\data\description.csv"
 # # sentence 데이터베이스 저장하기
 # with open(csv_path, 'r', encoding='utf-8') as csvfile:
 #     data_reader = csv.DictReader(csvfile)

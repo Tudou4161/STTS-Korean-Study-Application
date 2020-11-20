@@ -6,7 +6,7 @@ django-disqus==0.5
 gunicorn==20.0.4
 joblib==0.17.0
 mock==4.0.2
-numpy==1.18.4
+numpy==1.19.0
 polls==0.1
 psycopg2-binary==2.8.6
 PyMySQL==0.10.1
