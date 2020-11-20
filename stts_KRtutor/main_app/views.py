@@ -37,9 +37,8 @@ def chapter(request):
             chap_config.append(elem) #0이 아니라 1이상이면 템플릿에 왕관 출력
 
 
-    global en
-
     if request.method == "POST":
+        global en
         en = request.POST["trans_lang_option"]
 
     kr_trans_list = []
